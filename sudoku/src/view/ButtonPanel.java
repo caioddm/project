@@ -1,4 +1,4 @@
-package nl.elridge.sudoku.view;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -12,8 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
-import nl.elridge.sudoku.controller.ButtonController;
-import nl.elridge.sudoku.model.UpdateAction;
+import controller.ButtonController;
+import model.UpdateAction;
 
 /**
  * This class draws the button panel and reacts to updates from the model.

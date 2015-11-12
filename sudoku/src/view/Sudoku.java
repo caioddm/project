@@ -1,11 +1,11 @@
-package nl.elridge.sudoku.view;
+package view;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import nl.elridge.sudoku.controller.ButtonController;
-import nl.elridge.sudoku.controller.SudokuController;
-import nl.elridge.sudoku.model.Game;
+import controller.ButtonController;
+import controller.SudokuController;
+import model.Game;
 
 /**
  * Main class of program.

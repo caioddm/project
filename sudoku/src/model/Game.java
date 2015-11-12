@@ -1,4 +1,4 @@
-package nl.elridge.sudoku.model;
+package model;
 
 import java.util.ArrayList;
 import java.util.Collections;

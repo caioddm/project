@@ -1,14 +1,14 @@
-package nl.elridge.sudoku.controller;
+package controller;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
-import nl.elridge.sudoku.model.Game;
-import nl.elridge.sudoku.model.UpdateAction;
-import nl.elridge.sudoku.view.Field;
-import nl.elridge.sudoku.view.SudokuPanel;
+import model.Game;
+import model.UpdateAction;
+import view.Field;
+import view.SudokuPanel;
 
 /**
  * This class controls all user actions from SudokuPanel.

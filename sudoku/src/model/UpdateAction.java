@@ -1,4 +1,4 @@
-package nl.elridge.sudoku.model;
+package model;
 
 /**
  * Enumeration used to inform observers what to update.

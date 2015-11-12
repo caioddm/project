@@ -1,9 +1,9 @@
-package nl.elridge.sudoku.controller;
+package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
-import nl.elridge.sudoku.model.Game;
+import model.Game;
 
 /**
  * This class controls all user actions from ButtonPanel.

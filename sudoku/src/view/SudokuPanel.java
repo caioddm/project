@@ -1,4 +1,4 @@
-package nl.elridge.sudoku.view;
+package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -6,9 +6,9 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import nl.elridge.sudoku.controller.SudokuController;
-import nl.elridge.sudoku.model.Game;
-import nl.elridge.sudoku.model.UpdateAction;
+import controller.SudokuController;
+import model.Game;
+import model.UpdateAction;
 
 /**
  * This class draws the sudoku panel and reacts to updates from the model.
