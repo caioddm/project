@@ -1,13 +1,20 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import controller.SudokuController;
 import model.Game;
+import model.Sketch;
+import model.Stroke;
 import model.UpdateAction;
 
 /**
@@ -15,23 +22,95 @@ import model.UpdateAction;
  *
  * @author Eric Beijer
  */
+
+
 public class SudokuPanel extends JPanel implements Observer {
+	public class SubPanel extends JPanel{
+		private List<Sketch> sketches;
+		private Stroke ongoingStroke;
+		private int xOffset;
+		private int yOffset;
+		
+		public SubPanel(int xOff, int yOff){
+			super();
+			sketches = new ArrayList<Sketch>();
+			xOffset = xOff;
+			yOffset = yOff;
+		}
+		
+		public SubPanel(GridLayout grid, int xOff, int yOff){
+			super(grid);
+			sketches = new ArrayList<Sketch>();
+			xOffset = xOff;
+			yOffset = yOff;
+		}
+		
+		public int getXOffset(){
+			return xOffset;
+		}
+		
+		public int getYOffset(){
+			return yOffset;
+		}
+		
+		public List<Sketch> getSketches() {
+	        return sketches;
+	    }
+
+	    public void addSketch(Sketch skt) {
+	        sketches.add(skt);
+	    }
+
+	    public void resetPoints() {
+	    	ongoingStroke = null;
+	    }
+	    
+	    public void setOngoingStroke(Stroke s){
+	    	this.ongoingStroke = s;
+	    }
+	    
+	    @Override
+	    public void paintComponent(Graphics g) {
+	        g.setColor(Color.WHITE);
+	        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+	        g.setColor(Color.BLACK);
+	        for (int i = 0; i < sketches.size(); i++) {
+				for (int j = 0; j < sketches.get(i).getStrokes().size(); j++) {
+					Stroke stroke = sketches.get(i).getStrokes().get(j);
+					for (int k = 1; k < stroke.getPoints().size(); k++) {
+			            Point p1 = stroke.getPoints().get(k - 1);
+			            Point p2 = stroke.getPoints().get(k);
+			            g.drawLine(p1.x, p1.y, p2.x, p2.y);
+			        }
+				}
+			}
+	        
+	        //draw ongoing stroke
+	        if(ongoingStroke != null){
+		        for (int k = 1; k < ongoingStroke.getPoints().size(); k++) {
+		            Point p1 = ongoingStroke.getPoints().get(k - 1);
+		            Point p2 = ongoingStroke.getPoints().get(k);
+		            g.drawLine(p1.x, p1.y, p2.x, p2.y);
+		        }
+	        }
+	    }
+	}
     // Color constant for candidates.
     private static final Color COLOR_CANDIDATE = new Color(102, 153, 255);
 
     private Field[][] fields;       // Array of fields.
-    private JPanel[][] panels;      // Panels holding the fields.
-
+    private SubPanel[][] panels;      // Panels holding the fields.
+    
+    
     /**
      * Constructs the panel, adds sub panels and adds fields to these sub panels.
      */
     public SudokuPanel() {
         super(new GridLayout(3, 3));
-
-        panels = new JPanel[3][3];
+        panels = new SubPanel[3][3];
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
-                panels[y][x] = new JPanel(new GridLayout(3, 3));
+                panels[y][x] = new SubPanel(new GridLayout(3, 3), x, y);
                 panels[y][x].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
                 add(panels[y][x]);
             }
@@ -40,7 +119,7 @@ public class SudokuPanel extends JPanel implements Observer {
         fields = new Field[9][9];
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
-                fields[y][x] = new Field(x, y);
+                fields[y][x] = new Field(x, y, panels[y / 3][x / 3]);
                 panels[y / 3][x / 3].add(fields[y][x]);
             }
         }
@@ -119,8 +198,11 @@ public class SudokuPanel extends JPanel implements Observer {
      */
     public void setController(SudokuController sudokuController) {
         for (int y = 0; y < 3; y++) {
-            for (int x = 0; x < 3; x++)
+            for (int x = 0; x < 3; x++){
                 panels[y][x].addMouseListener(sudokuController);
+                panels[y][x].addMouseMotionListener(sudokuController);
+            }
         }
     }
+    
 }
