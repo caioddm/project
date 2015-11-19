@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.MouseEvent;
-import javax.swing.JPanel;
 import javax.swing.event.MouseInputAdapter;
 
 import model.Game;
