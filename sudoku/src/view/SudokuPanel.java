@@ -155,7 +155,7 @@ public class SudokuPanel extends JPanel implements Observer {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
                 fields[y][x].setBackground(Color.WHITE);
-                fields[y][x].setNumber(game.getNumber(x, y), false);
+                fields[y][x].setNumber(game.getNumber(x, y), game.getLang(), false);
             }
         }
     }

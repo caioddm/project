@@ -2,8 +2,10 @@ package view;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import controller.ButtonController;
+import controller.RadioButtonController;
 import controller.SudokuController;
 import model.Game;
 
@@ -20,14 +22,24 @@ public class Sudoku extends JFrame {
 
         Game game = new Game();
 
+        JPanel subButtonPanel = new JPanel();
+        subButtonPanel.setLayout(new BorderLayout());
+        
         ButtonController buttonController = new ButtonController(game);
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setController(buttonController);
-        add(buttonPanel, BorderLayout.EAST);
+        subButtonPanel.add(buttonPanel, BorderLayout.NORTH);
 
+        RadioButtonController rButtonController = new RadioButtonController(game);
+        LanguagePanel languagePanel = new LanguagePanel();
+        languagePanel.setController(rButtonController);
+        subButtonPanel.add(languagePanel, BorderLayout.CENTER);
+        
+        add(subButtonPanel, BorderLayout.EAST);
+        
         SudokuPanel sudokuPanel = new SudokuPanel();
         SudokuController sudokuController = new SudokuController(sudokuPanel, game);
-        sudokuPanel.setGame(game);
+        //sudokuPanel.setGame(game);
         sudokuPanel.setController(sudokuController);
         add(sudokuPanel, BorderLayout.CENTER);
 

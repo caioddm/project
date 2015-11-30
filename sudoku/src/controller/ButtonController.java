@@ -28,8 +28,10 @@ public class ButtonController implements ActionListener {
      * @param e ActionEvent.
      */
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("New"))
-            game.newGame();
+        if (e.getActionCommand().equals("New")) {
+        	
+        	game.newGame();
+        }           
         else if (e.getActionCommand().equals("Check"))
             game.checkGame();
         else if (e.getActionCommand().equals("Exit"))

@@ -15,7 +15,22 @@ import view.SudokuPanel.SubPanel;
  * @author Eric Beijer
  */
 public class Field extends JLabel {
-    private int x;      // X position in game.
+	
+	public static class NumberSet {
+		private static final String[][] numbers = {
+				{"1", "2", "3", "4", "5", "6", "7", "8", "9"},
+				{"\u0967", "\u0968", "\u0969", "\u096a", "\u096b",
+				 "\u096c", "\u096d", "\u096e", "\u096f"},
+				{"\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94",
+				 "\u516d", "\u4e03", "\u516b", "\u4e5d"}
+		};
+	}
+	
+	public static final int ARABIC = 0;
+	public static final int HINDI = 1;
+	public static final int CHINESE = 2;
+    
+	private int x;      // X position in game.
     private int y;      // Y position in game.
     private SubPanel parentPanel;
     /**
@@ -41,9 +56,10 @@ public class Field extends JLabel {
      * @param number        Number to be set.
      * @param userInput     Boolean indicating number is user input or not.
      */
-    public void setNumber(int number, boolean userInput) {
+    public void setNumber(int number, int lang, boolean userInput) {
         setForeground(userInput ? Color.BLUE : Color.BLACK);
-        setText(number > 0 ? number + "" : "");
+        String num = number > 0? NumberSet.numbers[lang][number-1] + "" : "";
+        setText(num);
     }
 
     /**

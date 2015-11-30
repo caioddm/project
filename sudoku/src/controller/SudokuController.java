@@ -74,10 +74,10 @@ public class SudokuController extends MouseInputAdapter {
                 if (number == -1)
                     return;
                 game.setNumber(x, y, number);
-                field.setNumber(number, true);
+                field.setNumber(number, game.getLang(), true);
             } else if (e.getButton() == MouseEvent.BUTTON3 && !field.getForeground().equals(Color.BLACK)) {
                 game.setNumber(x, y, 0);
-                field.setNumber(0, false);
+                field.setNumber(0, game.getLang(), false);
             }
             sudokuPanel.update(game, UpdateAction.CANDIDATES);
         }

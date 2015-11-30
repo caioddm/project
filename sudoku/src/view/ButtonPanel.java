@@ -87,7 +87,8 @@ public class ButtonPanel extends JPanel implements Observer {
         switch ((UpdateAction)arg) {
             case NEW_GAME:
             case CHECK:
-                bgNumbers.clearSelection();
+            	if(bgNumbers != null)
+            		bgNumbers.clearSelection();
                 break;
         }
     }

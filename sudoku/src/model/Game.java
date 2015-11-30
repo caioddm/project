@@ -18,7 +18,8 @@ public class Game extends Observable {
     private boolean[][] check;      // Holder for checking validity of game.
     private int selectedNumber;     // Selected number by user.
     private boolean help;           // Help turned on or off.
-
+    private int lang;
+    
     /**
      * Constructor
      */
@@ -130,6 +131,14 @@ public class Game extends Observable {
         return game[y][x];
     }
 
+    public void setLang(int lang) {
+    	this.lang = lang;
+    }
+    
+    public int getLang() {
+    	return this.lang;
+    }
+    
     /**
      * Returns whether user input is valid of given position.
      *
