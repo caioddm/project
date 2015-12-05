@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
 
+import view.Field;
+
 /**
  * This class represents a Sudoku game. It contains the solution, the user
  * input, the selected number and methods to check the validation of the user
@@ -15,10 +17,12 @@ import java.util.Observable;
 public class Game extends Observable {
     private int[][] solution;       // Generated solution.
     private int[][] game;           // Generated game with user input.
+    private int[][] originalGame;
     private boolean[][] check;      // Holder for checking validity of game.
     private int selectedNumber;     // Selected number by user.
     private boolean help;           // Help turned on or off.
     private int lang;
+    private boolean eraseMode;
     
     /**
      * Constructor
@@ -27,6 +31,8 @@ public class Game extends Observable {
         newGame();
         check = new boolean[9][9];
         help = true;
+        lang = Field.HINDI;
+        eraseMode = false;
     }
 
     /**
@@ -36,6 +42,7 @@ public class Game extends Observable {
     public void newGame() {
         solution = generateSolution(new int[9][9], 0);
         game = generateGame(copy(solution));
+        originalGame = copy(game);
         setChanged();
         notifyObservers(UpdateAction.NEW_GAME);
     }
@@ -137,6 +144,24 @@ public class Game extends Observable {
     
     public int getLang() {
     	return this.lang;
+    }
+    
+    public boolean isEraseModeOn() {
+    	return this.eraseMode;
+    }
+    
+    public void toggleEraseMode() {
+    	eraseMode = eraseMode? false: true;
+    }
+    
+    public void setEraseMode(boolean mode) {
+    	this.eraseMode = mode;
+    }
+    
+    public boolean isImmutableCell(int x, int y) {
+    	if(x >= 0 && y >= 0)
+    		return originalGame[y][x] > 0;
+    	return false;
     }
     
     /**

@@ -73,7 +73,8 @@ public class SudokuPanel extends JPanel implements Observer {
 	        g.setColor(Color.WHITE);
 	        g.fillRect(0, 0, this.getWidth(), this.getHeight());
 	        g.setColor(Color.BLACK);
-	        for (int i = 0; i < sketches.size(); i++) {
+	        
+	        /*for (int i = 0; i < sketches.size(); i++) {
 				for (int j = 0; j < sketches.get(i).getStrokes().size(); j++) {
 					Stroke stroke = sketches.get(i).getStrokes().get(j);
 					for (int k = 1; k < stroke.getPoints().size(); k++) {
@@ -82,7 +83,7 @@ public class SudokuPanel extends JPanel implements Observer {
 			            g.drawLine(p1.x, p1.y, p2.x, p2.y);
 			        }
 				}
-			}
+			}*/
 	        
 	        //draw ongoing stroke
 	        if(ongoingStroke != null){
@@ -143,6 +144,8 @@ public class SudokuPanel extends JPanel implements Observer {
             case HELP:
                 setCandidates((Game)o);
                 break;
+            case ERASE_MODE:
+            	break;
         }
     }
 

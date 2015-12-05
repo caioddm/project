@@ -1,10 +1,13 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import controller.ButtonController;
+import controller.EditController;
 import controller.RadioButtonController;
 import controller.SudokuController;
 import model.Game;
@@ -23,17 +26,22 @@ public class Sudoku extends JFrame {
         Game game = new Game();
 
         JPanel subButtonPanel = new JPanel();
-        subButtonPanel.setLayout(new BorderLayout());
+        subButtonPanel.setLayout(new GridLayout(3,0,0,0));
         
         ButtonController buttonController = new ButtonController(game);
         ButtonPanel buttonPanel = new ButtonPanel();
         buttonPanel.setController(buttonController);
-        subButtonPanel.add(buttonPanel, BorderLayout.NORTH);
+        subButtonPanel.add(buttonPanel);
 
         RadioButtonController rButtonController = new RadioButtonController(game);
         LanguagePanel languagePanel = new LanguagePanel();
         languagePanel.setController(rButtonController);
-        subButtonPanel.add(languagePanel, BorderLayout.CENTER);
+        subButtonPanel.add(languagePanel);
+        
+        EditController editController = new EditController(game);
+        EditPanel editPanel = new EditPanel();
+        editPanel.setController(editController);
+        subButtonPanel.add(editPanel);
         
         add(subButtonPanel, BorderLayout.EAST);
         

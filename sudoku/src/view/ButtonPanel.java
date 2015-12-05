@@ -90,6 +90,8 @@ public class ButtonPanel extends JPanel implements Observer {
             	if(bgNumbers != null)
             		bgNumbers.clearSelection();
                 break;
+            default:
+            	break;
         }
     }
 

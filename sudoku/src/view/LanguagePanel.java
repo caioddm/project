@@ -43,7 +43,7 @@ public class LanguagePanel extends JPanel implements Observer {
         
         btnHindi = new JRadioButton("Hindi");
         btnHindi.setFocusable(false);
-        btnHindi.setSelected(false);
+        btnHindi.setSelected(true);
         btnHindi.setActionCommand(Integer.toString(Field.HINDI));
         pnlOptions.add(btnHindi);
         

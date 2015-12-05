@@ -111,7 +111,29 @@ public class SudokuController extends MouseInputAdapter {
     	timer.schedule(timerTask, 5*1000);
     }
     
-    public void mouseClicked(MouseEvent e) { }
+    public void mouseClicked(MouseEvent e) {
+    	
+    	SubPanel panel = (SubPanel)e.getSource();
+        Component component = panel.getComponentAt(e.getPoint());
+        if (component instanceof Field) {
+            Field field = (Field)component;
+            int x = field.getFieldX(), y = field.getFieldY();
+            
+            if(game.isEraseModeOn() && !game.isImmutableCell(x, y)) {
+            	System.out.println("Setting ("+x+","+y+")");
+            	game.setNumber(x, y, 0);
+            	field.setNumber(0, game.getLang(), false);
+            }
+            else {
+            	if(!game.isImmutableCell(x, y)) {
+	            	System.out.println("Setting ("+x+","+y+")");
+	            	
+	            	game.setNumber(x, y, 1);
+	            	field.setNumber(1, game.getLang(), false);
+            	}
+            }
+        }
+    }
     public void mouseEntered(MouseEvent e) { }
     public void mouseExited(MouseEvent e) { }
     
@@ -136,8 +158,9 @@ public class SudokuController extends MouseInputAdapter {
     }
     
     private void _startNewSketch(){
-    	sketches.add(currentSketch);
+    	//sketches.add(currentSketch);
 		currentSketch = null;
+		sudokuPanel.repaint();
     }
     
 }

@@ -10,5 +10,6 @@ public enum UpdateAction {
     CHECK,
     SELECTED_NUMBER,
     CANDIDATES,
-    HELP
+    HELP,
+    ERASE_MODE
 }
