@@ -1,10 +1,15 @@
 package model;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Stroke {
 	private List<Point> points;
+	
+	public Stroke(){
+		this.points = new ArrayList<Point>();
+	}
 	
 	public Stroke(List<Point> points){
 		this.points = points;

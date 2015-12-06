@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Sketch {
+	private int label;
 	private List<Stroke> strokes;
 	private int row;
 	private int column;
@@ -12,6 +13,7 @@ public class Sketch {
 		strokes = new ArrayList<Stroke>();
 		this.row = row;
 		this.column = column;
+		this.label = 0;
 	}
 	
 	public List<Stroke> getStrokes(){
@@ -28,5 +30,13 @@ public class Sketch {
 	
 	public int getColumn(){
 		return column;
+	}
+	
+	public int getLabel(){
+		return label;
+	}
+	
+	public void setLabel(int label){
+		this.label = label;
 	}
 }
