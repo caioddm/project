@@ -19,6 +19,12 @@ public class EditController implements ActionListener {
 		// TODO Auto-generated method stub
 		AbstractButton abstractButton = (AbstractButton) e.getSource();
         boolean selected = abstractButton.getModel().isSelected();
-        this.game.setEraseMode(selected);
+        if(e.getActionCommand().equals("Erase"))
+        	this.game.setEraseMode(selected);
+        else if(e.getActionCommand().equals("Rough")) {
+        	if(this.game.isRoughModeOn())
+        		game.setPrevMove(true);
+        	game.setRoughMode(selected);
+        }
 	}
 }
