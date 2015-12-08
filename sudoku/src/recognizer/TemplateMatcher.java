@@ -19,13 +19,42 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+//import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javafx.util.Pair;
 import model.Sketch;
 import model.Stroke;
 
 public class TemplateMatcher {
+	
+    public class RankedItem
+    {
+    	public int label;
+    	public Double score;
+    	public Double coverage;
+    	
+    	public RankedItem(int label, double score, double coverage){
+    		this.label = label;
+    		this.score = score;
+    		this.coverage = coverage;
+    	}
+    }
+    
+    class ScoreComparator implements Comparator<RankedItem> {
+        @Override
+        public int compare(RankedItem o1, RankedItem o2) {
+            return o2.score.compareTo(o1.score);
+        }
+    }
+
+    class CoverageComparator implements Comparator<RankedItem> {
+        @Override
+        public int compare(RankedItem o1, RankedItem o2) {
+            return o2.coverage.compareTo(o1.coverage);
+        }
+    }
+	
+	
 	private List<Sketch> myTemplates;
     private List<RankedItem> myRankings;
 
@@ -603,6 +632,8 @@ public class TemplateMatcher {
 
         return d;
     }
+    
+    
 }
 
 class BoundingBox
@@ -694,31 +725,6 @@ class BoundingBox
     public double MaxX;
 
     public double MaxY;
+
 }
 
-class RankedItem
-{
-	public int label;
-	public Double score;
-	public Double coverage;
-	
-	public RankedItem(int label, double score, double coverage){
-		this.label = label;
-		this.score = score;
-		this.coverage = coverage;
-	}
-}
-
-class ScoreComparator implements Comparator<RankedItem> {
-    @Override
-    public int compare(RankedItem o1, RankedItem o2) {
-        return o2.score.compareTo(o1.score);
-    }
-}
-
-class CoverageComparator implements Comparator<RankedItem> {
-    @Override
-    public int compare(RankedItem o1, RankedItem o2) {
-        return o2.coverage.compareTo(o1.coverage);
-    }
-}

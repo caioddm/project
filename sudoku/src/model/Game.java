@@ -22,7 +22,8 @@ public class Game extends Observable {
     private int selectedNumber;     // Selected number by user.
     private boolean help;           // Help turned on or off.
     private int lang;
-    private boolean eraseMode;
+    private boolean eraseMode, roughMode;
+    private boolean prevMoveWasRough;
     
     /**
      * Constructor
@@ -33,6 +34,8 @@ public class Game extends Observable {
         help = true;
         lang = Field.HINDI;
         eraseMode = false;
+        roughMode = false;
+        prevMoveWasRough = false;
     }
 
     /**
@@ -162,6 +165,22 @@ public class Game extends Observable {
     	if(x >= 0 && y >= 0)
     		return originalGame[y][x] > 0;
     	return false;
+    }
+    
+    public boolean isRoughModeOn() {
+    	return this.roughMode;
+    }
+    
+    public void setRoughMode(boolean mode) {
+    	this.roughMode = mode;
+    }
+    
+    public void setPrevMove(boolean move) {
+    	this.prevMoveWasRough = move;
+    }
+    
+    public boolean getPrevMove() {
+    	return prevMoveWasRough;
     }
     
     /**

@@ -17,7 +17,7 @@ public class EditPanel extends JPanel implements Observer {
 	/**
 	 * 
 	 */
-	JToggleButton btnEdit;
+	JToggleButton btnEdit, btnRough;
 
 	/**
 	 *  Constructor
@@ -35,6 +35,9 @@ public class EditPanel extends JPanel implements Observer {
         btnEdit = new JToggleButton("Erase");
         pnlOptions.add(btnEdit);
         
+        btnRough = new JToggleButton("Rough");
+        pnlOptions.add(btnRough);
+        
 	}
 	
 	@Override
@@ -45,5 +48,6 @@ public class EditPanel extends JPanel implements Observer {
 
 	public void setController(EditController editController) {
 		btnEdit.addActionListener(editController);
+		btnRough.addActionListener(editController);
 	}
 }
