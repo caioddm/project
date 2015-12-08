@@ -462,34 +462,37 @@ public class TemplateMatcher {
             // initialize list of resampled stroke points
             // add the first stroke point
             List<Point> points = stroke.getPoints();
-            List<Point> newPoints = new ArrayList<Point>();
-            newPoints.add(points.get(0));
-
-            //
-            for (int i = 1; i < points.size(); ++i)
+            if(points.size() > 0)
             {
-
-                double d = Distance(points.get(i - 1), points.get(i));
-                if (D + d >= I)
-                {
-
-                    double qx = points.get(i - 1).x + ((I - D) / d) * (points.get(i).x - points.get(i - 1).x);
-                    double qy = points.get(i - 1).y + ((I - D) / d) * (points.get(i).y - points.get(i - 1).y);
-                    Point q = new Point((int)qx, (int)qy);
-                    newPoints.add(q);
-                    points.set(i, q);
-                    D = 0.0;
-                }
-                else
-                {
-                    D += d;
-                }
+	            List<Point> newPoints = new ArrayList<Point>();
+	            newPoints.add(points.get(0));
+	
+	            //
+	            for (int i = 1; i < points.size(); ++i)
+	            {
+	
+	                double d = Distance(points.get(i - 1), points.get(i));
+	                if (D + d >= I)
+	                {
+	
+	                    double qx = points.get(i - 1).x + ((I - D) / d) * (points.get(i).x - points.get(i - 1).x);
+	                    double qy = points.get(i - 1).y + ((I - D) / d) * (points.get(i).y - points.get(i - 1).y);
+	                    Point q = new Point((int)qx, (int)qy);
+	                    newPoints.add(q);
+	                    points.set(i, q);
+	                    D = 0.0;
+	                }
+	                else
+	                {
+	                    D += d;
+	                }
+	            }
+	            D = 0.0;
+	
+	            //
+	            Stroke newStroke = new Stroke(newPoints);
+	            newStrokes.addStroke(newStroke);
             }
-            D = 0.0;
-
-            //
-            Stroke newStroke = new Stroke(newPoints);
-            newStrokes.addStroke(newStroke);
         }
         
         newStrokes.setLabel(strokes.getLabel());
