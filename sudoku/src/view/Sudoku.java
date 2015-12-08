@@ -66,7 +66,10 @@ public class Sudoku extends JFrame {
      */
     public static void main(String[] args) {
         // Use System Look and Feel
-        try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); }
+        try { 
+        	
+        	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
+        }
         catch (Exception ex) { ex.printStackTrace(); }
         new Sudoku();
     }

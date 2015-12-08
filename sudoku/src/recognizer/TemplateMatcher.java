@@ -29,8 +29,8 @@ public class TemplateMatcher {
 	private List<Sketch> myTemplates;
     private List<RankedItem> myRankings;
 
-    public static int N = 64;
-    public static int SIZE = 250;
+    public static int N = 32;
+    public static int SIZE = 400;
     public static Point K = new Point(200, 200);
 
     public static String NO_RESULT = "none";
@@ -146,11 +146,11 @@ public class TemplateMatcher {
         double angle = getAngle(point1, point2);
 
         // case: the angle exceeds the flat incline angle
-        if (angle > LINE_ANGLE_0 && angle < LINE_ANGLE_0 + LINE_ANGLE_DEVIATION_THRESHOLD)
+        if (angle >= LINE_ANGLE_0 && angle < LINE_ANGLE_0 + LINE_ANGLE_DEVIATION_THRESHOLD)
         {
             return true;
         }
-        if (angle > LINE_ANGLE_180 - LINE_ANGLE_DEVIATION_THRESHOLD && angle < LINE_ANGLE_180)
+        if (angle > LINE_ANGLE_180 - LINE_ANGLE_DEVIATION_THRESHOLD && angle <= LINE_ANGLE_180)
         {
             return true;
         }
@@ -158,9 +158,12 @@ public class TemplateMatcher {
         return false;
     }
 
-    public RankedItem Classify(Sketch symbol)
-    {
+    public int Classify(Sketch symbol)
+    {    	
         symbol.setLabel(-1);
+        
+        if(isScribble(symbol))
+        	return 0;
         // get the rankings
         myRankings = Rank(symbol);
 
@@ -174,7 +177,12 @@ public class TemplateMatcher {
         // sort top rankings by coverage
         topRankings.sort(new CoverageComparator());
 
-        return topRankings.get(0);
+        return topRankings.get(0).label;
+    }
+    
+    private boolean isScribble(Sketch symbol){
+    	BoundingBox bb = new BoundingBox(symbol);
+    	return PathLength(symbol) > 10*Math.max(bb.Width(), bb.Height());
     }
 
     private Pair<Double, Double> Metrics(List<Stroke> A, List<Stroke> B)
@@ -217,17 +225,53 @@ public class TemplateMatcher {
                     minI = i;
                 }
             }
-            d += minD;
-            c[minI] = true;
+            
+            if(minD > d)
+            	d = minD;
+            
+            if(minI < c.length)
+            	c[minI] = true;
+        }
+        
+        double dBack = 0.0;
+        boolean[] cBack = new boolean[input.size()];
+        for (Point point : template)
+        {
+
+            double minD = Double.MAX_VALUE;
+            int minI = 0;
+            for (int i = 0; i < input.size(); ++i)
+            {
+                Point other = input.get(i);
+                double currD = Distance(point, other);
+                if (currD < minD)
+                {
+                    minD = currD;
+                    minI = i;
+                }
+            }
+            
+            if(minD > dBack)
+            	dBack = minD;
+            
+            if(minI < c.length)
+            	c[minI] = true;
         }
 
-        double distance = d;
+        double distance = Math.max(d, dBack);
         int boolCount = 0;
         for (int i = 0; i < c.length; i++) {
 			if(c[i])
 				boolCount++;
 		}
-        double coverage = (double)boolCount / (double)c.length;
+        
+        int boolCountBack = 0;
+        for (int i = 0; i < cBack.length; i++) {
+			if(cBack[i])
+				boolCountBack++;
+		}
+        
+        double coverage = boolCount > boolCountBack ? (double)boolCount / (double)c.length : (double)boolCountBack / (double)cBack.length;
         
         return new Pair<Double, Double>(distance, coverage);
     }
@@ -308,10 +352,10 @@ public class TemplateMatcher {
 										if(pNode.getNodeType() == Node.ELEMENT_NODE){
 											Element pt = (Element) pNode;
 											String sPoint = pt.getTextContent();
-											sPoint = sPoint.substring(1, sPoint.length() - 2);
+											sPoint = sPoint.substring(1, sPoint.length() - 1);
 											int comma = sPoint.indexOf(',');
-											int x = Integer.valueOf(sPoint.substring(0, comma - 1));
-											int y = Integer.valueOf(sPoint.substring(comma + 1, sPoint.length() - 1));
+											int x = Integer.valueOf(sPoint.substring(0, comma));
+											int y = Integer.valueOf(sPoint.substring(comma + 1, sPoint.length()));
 											stroke.addPoint(x, y);
 										}
 									}
@@ -373,7 +417,7 @@ public class TemplateMatcher {
         return transformedStrokes;
     }
 
-    private static Sketch CloneStrokes(Sketch original)
+    public static Sketch CloneStrokes(Sketch original)
     {
         Sketch clone = new Sketch(-1, -1);
         for (Stroke stroke : original.getStrokes())
@@ -381,7 +425,7 @@ public class TemplateMatcher {
             List<Point> points = new ArrayList<Point>();
             for (Point point : stroke.getPoints())
             {
-                points.add(point);
+                points.add(new Point(point.x, point.y));
             }
             Stroke newStroke = new Stroke(points);
 

@@ -125,7 +125,7 @@ public class SketchDemo {
     
     content.add(subPanel, BorderLayout.NORTH);
  
-    frame.setSize(600, 600);
+    frame.setSize(300, 300);
     // can close frame
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     // show the swing paint result

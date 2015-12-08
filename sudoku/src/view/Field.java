@@ -44,7 +44,7 @@ public class Field extends JLabel {
         this.x = x;
         this.y = y;
         this.parentPanel = parent;
-        setPreferredSize(new Dimension(40, 40));
+        setPreferredSize(new Dimension(80, 80));
         setBorder(BorderFactory.createLineBorder(Color.GRAY));
         setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
         setOpaque(false);

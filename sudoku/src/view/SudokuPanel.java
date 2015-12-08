@@ -25,21 +25,19 @@ import model.UpdateAction;
 
 public class SudokuPanel extends JPanel implements Observer {
 	public class SubPanel extends JPanel{
-		private List<Sketch> sketches;
+		private Sketch currentSketch;
 		private Stroke ongoingStroke;
 		private int xOffset;
 		private int yOffset;
 		
 		public SubPanel(int xOff, int yOff){
 			super();
-			sketches = new ArrayList<Sketch>();
 			xOffset = xOff;
 			yOffset = yOff;
 		}
 		
 		public SubPanel(GridLayout grid, int xOff, int yOff){
 			super(grid);
-			sketches = new ArrayList<Sketch>();
 			xOffset = xOff;
 			yOffset = yOff;
 		}
@@ -52,12 +50,16 @@ public class SudokuPanel extends JPanel implements Observer {
 			return yOffset;
 		}
 		
-		public List<Sketch> getSketches() {
-	        return sketches;
+		public Sketch getSketch() {
+	        return currentSketch;
 	    }
 
-	    public void addSketch(Sketch skt) {
-	        sketches.add(skt);
+	    public void setSketch(Sketch skt) {
+	        currentSketch = skt;
+	    }
+	    
+	    public void clearSketch(){
+	    	currentSketch = null;
 	    }
 
 	    public void resetPoints() {
@@ -74,16 +76,16 @@ public class SudokuPanel extends JPanel implements Observer {
 	        g.fillRect(0, 0, this.getWidth(), this.getHeight());
 	        g.setColor(Color.BLACK);
 	        
-	        /*for (int i = 0; i < sketches.size(); i++) {
-				for (int j = 0; j < sketches.get(i).getStrokes().size(); j++) {
-					Stroke stroke = sketches.get(i).getStrokes().get(j);
+	        if(currentSketch != null){
+				for (int j = 0; j < currentSketch.getStrokes().size(); j++) {
+					Stroke stroke = currentSketch.getStrokes().get(j);
 					for (int k = 1; k < stroke.getPoints().size(); k++) {
 			            Point p1 = stroke.getPoints().get(k - 1);
 			            Point p2 = stroke.getPoints().get(k);
 			            g.drawLine(p1.x, p1.y, p2.x, p2.y);
 			        }
 				}
-			}*/
+	        }
 	        
 	        //draw ongoing stroke
 	        if(ongoingStroke != null){
