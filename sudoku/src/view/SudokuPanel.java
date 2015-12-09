@@ -180,7 +180,7 @@ public class SudokuPanel extends JPanel implements Observer {
             for (int x = 0; x < 9; x++) {
                 fields[y][x].setBackground(Color.WHITE);
                 if (fields[y][x].getForeground().equals(Color.BLUE))
-                    fields[y][x].setBackground(game.isCheckValid(x, y) ? Color.GREEN : Color.RED);
+                    fields[y][x].setForeground(game.isCheckValid(x, y) ? Color.GREEN : Color.RED);
             }
         }
     }

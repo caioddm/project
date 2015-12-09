@@ -162,6 +162,9 @@ public class TemplateMatcher {
     {    	
         symbol.setLabel(-1);
         
+        int[] labelFreqScore = new int[10];
+        int[] labelFreqCov = new int[10];
+        
         if(isScribble(symbol))
         	return 0;
         // get the rankings
@@ -169,15 +172,41 @@ public class TemplateMatcher {
 
         // get the top rankings
         List<RankedItem> topRankings = new ArrayList<RankedItem>();
-        for (int i = 0; i < TOP_RANKINGS_COUNT; ++i)
+        for (int i = 0; i < TOP_RANKINGS_COUNT*2; ++i)
         {
-            topRankings.add(myRankings.get(i));
+        	RankedItem item = myRankings.get(i);
+        	if(i < TOP_RANKINGS_COUNT)
+        		labelFreqScore[item.label]++;
+        	
+            topRankings.add(item);
         }
 
         // sort top rankings by coverage
         topRankings.sort(new CoverageComparator());
-
-        return topRankings.get(0).label;
+        for (int i = 0; i < TOP_RANKINGS_COUNT; ++i)
+        {
+        	RankedItem item = myRankings.get(i);
+        	labelFreqCov[item.label]++;
+        }
+        
+        int maxFreqScore = -1;
+        int maxFreqCov = -1;
+        int maxFreqScoreVal = 0;
+        int maxFreqCovVal = 0;
+        
+        for (int i = 0; i < labelFreqCov.length; i++) {
+        	if(labelFreqScore[i] > maxFreqScoreVal){
+        		maxFreqScoreVal = labelFreqScore[i];
+        		maxFreqScore = i;
+    		}
+        	
+        	if(labelFreqCov[i] > maxFreqCovVal){
+        		maxFreqCovVal = labelFreqCov[i];
+        		maxFreqCov = i;
+    		}
+		}
+        
+        return maxFreqScore == maxFreqCov && maxFreqScoreVal > 1 && maxFreqCovVal > 1 ? maxFreqScore : 0;
     }
     
     private boolean isScribble(Sketch symbol){
