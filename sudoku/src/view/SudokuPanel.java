@@ -16,13 +16,6 @@ import model.Sketch;
 import model.Stroke;
 import model.UpdateAction;
 
-/**
- * This class draws the sudoku panel and reacts to updates from the model.
- *
- * @author Eric Beijer
- */
-
-
 public class SudokuPanel extends JPanel implements Observer {
 	public class SubPanel extends JPanel{
 		private List<Sketch> sketches;
@@ -103,10 +96,6 @@ public class SudokuPanel extends JPanel implements Observer {
     private Field[][] fields;       // Array of fields.
     private SubPanel[][] panels;      // Panels holding the fields.
     
-    
-    /**
-     * Constructs the panel, adds sub panels and adds fields to these sub panels.
-     */
     public SudokuPanel() {
         super(new GridLayout(3, 3));
         panels = new SubPanel[3][3];
@@ -127,12 +116,6 @@ public class SudokuPanel extends JPanel implements Observer {
         }
     }
 
-    /**
-     * Method called when model sends update notification.
-     *
-     * @param o     The model.
-     * @param arg   The UpdateAction.
-     */
     public void update(Observable o, Object arg) {
         switch ((UpdateAction)arg) {
             case NEW_GAME:
@@ -156,11 +139,6 @@ public class SudokuPanel extends JPanel implements Observer {
         }
     }
 
-    /**
-     * Sets the fields corresponding to given game.
-     *
-     * @param game  Game to be set.
-     */
     public void setGame(Game game) {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
@@ -170,11 +148,6 @@ public class SudokuPanel extends JPanel implements Observer {
         }
     }
 
-    /**
-     * Sets fields validity according to given game.
-     *
-     * @param game  Current game.
-     */
     private void setGameCheck(Game game) {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
@@ -185,11 +158,6 @@ public class SudokuPanel extends JPanel implements Observer {
         }
     }
 
-    /**
-     * Shows the candidates according to given game.
-     *
-     * @param game  Current game.
-     */
     private void setCandidates(Game game) {
         for (int y = 0; y < 9; y++) {
             for (int x = 0; x < 9; x++) {
@@ -200,11 +168,6 @@ public class SudokuPanel extends JPanel implements Observer {
         }
     }
 
-    /**
-     * Adds controller to all sub panels.
-     *
-     * @param sudokuController  Controller which controls all user actions.
-     */
     public void setController(SudokuController sudokuController) {
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++){

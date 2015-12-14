@@ -15,16 +15,10 @@ import controller.RadioButtonController;
 
 public class LanguagePanel extends JPanel implements Observer {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	JRadioButton btnArabic, btnHindi, btnChinese;
 	ButtonGroup btnGroup;
 
-	/**
-	 *  Constructor
-	 */
 	public LanguagePanel() {
 		super(new BorderLayout());
 		JPanel pnlAlign = new JPanel();
@@ -34,12 +28,6 @@ public class LanguagePanel extends JPanel implements Observer {
         JPanel pnlOptions = new JPanel(new FlowLayout(FlowLayout.LEADING));
         pnlOptions.setBorder(BorderFactory.createTitledBorder(" Language "));
         pnlAlign.add(pnlOptions);
-        
-        /*btnArabic = new JRadioButton("Arabic");
-        btnArabic.setFocusable(false);
-        btnArabic.setSelected(true);
-        btnArabic.setActionCommand(Integer.toString(Field.ARABIC));
-        pnlOptions.add(btnArabic);*/
         
         btnHindi = new JRadioButton("Hindi");
         btnHindi.setFocusable(false);
@@ -54,7 +42,6 @@ public class LanguagePanel extends JPanel implements Observer {
         pnlOptions.add(btnChinese);
         
         btnGroup = new ButtonGroup();
-        //btnGroup.add(btnArabic);
         btnGroup.add(btnHindi);
         btnGroup.add(btnChinese);
 	}
@@ -66,7 +53,6 @@ public class LanguagePanel extends JPanel implements Observer {
 	}
 
 	public void setController(RadioButtonController rButtonController) {
-		//btnArabic.addActionListener(rButtonController);
 		btnHindi.addActionListener(rButtonController);
 		btnChinese.addActionListener(rButtonController);
 	}

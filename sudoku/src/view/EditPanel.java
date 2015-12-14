@@ -14,14 +14,8 @@ import controller.EditController;
 
 public class EditPanel extends JPanel implements Observer {
 
-	/**
-	 * 
-	 */
 	JToggleButton btnEdit, btnRough;
 
-	/**
-	 *  Constructor
-	 */
 	public EditPanel() {
 		super(new BorderLayout());
 		JPanel pnlAlign = new JPanel();

@@ -12,11 +12,6 @@ import controller.RadioButtonController;
 import controller.SudokuController;
 import model.Game;
 
-/**
- * Main class of program.
- *
- * @author Eric Beijer
- */
 public class Sudoku extends JFrame {
     public Sudoku() {
         super("Sudoku");
@@ -47,7 +42,6 @@ public class Sudoku extends JFrame {
         
         SudokuPanel sudokuPanel = new SudokuPanel();
         SudokuController sudokuController = new SudokuController(sudokuPanel, game);
-        //sudokuPanel.setGame(game);
         sudokuPanel.setController(sudokuController);
         add(sudokuPanel, BorderLayout.CENTER);
 
@@ -59,11 +53,6 @@ public class Sudoku extends JFrame {
         setVisible(true);
     }
 
-    /**
-     * Main entry point of program.
-     * 
-     * @param args Command line arguments.
-     */
     public static void main(String[] args) {
         // Use System Look and Feel
         try { 

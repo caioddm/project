@@ -20,16 +20,10 @@ import view.Field;
 import view.SudokuPanel;
 import view.SudokuPanel.SubPanel;
 
-/**
- * This class controls all user actions from SudokuPanel.
- *
- * @author Eric Beijer
- */
 public class SudokuController extends MouseInputAdapter {
     private SudokuPanel sudokuPanel;    // Panel to control.
     private Game game;                  // Current Sudoku game.
     private TemplateMatcher templateMatcher;
-    //private List<Sketch> sketches;
     private Stroke currentStroke;
     private Sketch currentSketch;
     private Timer timer;
@@ -38,28 +32,15 @@ public class SudokuController extends MouseInputAdapter {
     private Field currentField;
     private HashMap<Field, ArrayList<Sketch>> fieldSketchMap;
 
-    /**
-     * Constructor, sets game.
-     *
-     * @param game  Game to be set.
-     */
+   
     public SudokuController(SudokuPanel sudokuPanel, Game game) {
         this.sudokuPanel = sudokuPanel;
         this.game = game;
-        //this.sketches = new ArrayList<Sketch>();
         this.timer = new Timer();
         this.fieldSketchMap = new HashMap<Field, ArrayList<Sketch>>();
         this.templateMatcher = new TemplateMatcher(".");
     }
 
-    /**
-     * Recovers if user clicked field in game. If so it sets the selected number
-     * at clicked position in game and updates clicked field. If user clicked a
-     * field and used left mouse button, number at clicked position will be
-     * cleared in game and clicked field will be updated.
-     *
-     * @param e MouseEvent.
-     */
     public void mousePressed(MouseEvent e) {
         SubPanel panel = (SubPanel)e.getSource();
         Component component = panel.getComponentAt(e.getPoint());
@@ -78,17 +59,6 @@ public class SudokuController extends MouseInputAdapter {
 	        	currentStroke.addPoint(e.getX(), e.getY());        	
 	        	
 	            this.currentField = field;
-	            /*if (e.getButton() == MouseEvent.BUTTON1 && (game.getNumber(x, y) == 0 || field.getForeground().equals(Color.BLUE))) {
-	                int number = game.getSelectedNumber();
-	                if (number == -1)
-	                    return;
-	                game.setNumber(x, y, number);
-	                field.setNumber(number, game.getLang(), true);
-	            } else if (e.getButton() == MouseEvent.BUTTON3 && !field.getForeground().equals(Color.BLACK)) {
-	                game.setNumber(x, y, 0);
-	                field.setNumber(0, game.getLang(), false);
-	            }*/
-	            //sudokuPanel.update(game, UpdateAction.CANDIDATES);
             }
         }
     }
@@ -154,30 +124,17 @@ public class SudokuController extends MouseInputAdapter {
             int x = field.getFieldX(), y = field.getFieldY();
             
             if(game.isEraseModeOn() && !game.isImmutableCell(x, y)) {
-            	//System.out.println("Setting ("+x+","+y+")");
             	game.setNumber(x, y, 0);
             	field.setNumber(0, game.getLang(), true);
             	List<Sketch> sketches = currentPanel.getSketches();
-            	//System.out.println(fieldSketchMap.get(field));
             	List<Sketch> fieldSketch = fieldSketchMap.get(field);
             	for(Sketch s: fieldSketch) {
             		int idx = sketches.indexOf(s);
             		if(idx != -1)
             			sketches.remove(idx);
             		panel.repaint();
-            	}
-            	
-            	//panel.clearSketch();
-            	//currentSketch = null;
-            }
-            /*else {
-            	if(!game.isImmutableCell(x, y)) {
-	            	System.out.println("Setting ("+x+","+y+")");
-	            	
-	            	game.setNumber(x, y, 1);
-	            	field.setNumber(1, game.getLang(), false);
-            	}
-            }*/
+            	}            	
+            }            
         }
     }
     public void mouseEntered(MouseEvent e) { }
@@ -207,7 +164,6 @@ public class SudokuController extends MouseInputAdapter {
     	if(currentSketch != null){
     		if(!(game.isRoughModeOn() || game.isEraseModeOn())) {
     			_setFieldValue(_classifySketch(currentSketch));
-    			//System.out.println("Recognizing");
     			List<Sketch> sketches = currentPanel.getSketches();
     	    	int idx = sketches.indexOf(currentSketch);
     	    	if(idx != -1) sketches.remove(idx);
@@ -224,7 +180,6 @@ public class SudokuController extends MouseInputAdapter {
 			
 			
 	    	currentSketch = null;
-			//currentPanel.clearSketch();
 			sudokuPanel.repaint();
 		}
     }

@@ -9,11 +9,6 @@ import javax.swing.JLabel;
 
 import view.SudokuPanel.SubPanel;
 
-/**
- * This class represents a field on the SudokuPanel.
- *
- * @author Eric Beijer
- */
 public class Field extends JLabel {
 	
 	public static class NumberSet {
@@ -33,12 +28,6 @@ public class Field extends JLabel {
 	private int x;      // X position in game.
     private int y;      // Y position in game.
     private SubPanel parentPanel;
-    /**
-     * Constructs the label and sets x and y positions in game.
-     *
-     * @param x     X position in game.
-     * @param y     Y position in game.
-     */
     public Field(int x, int y, SubPanel parent) {
         super("", CENTER);
         this.x = x;
@@ -50,32 +39,16 @@ public class Field extends JLabel {
         setOpaque(false);
     }
 
-    /**
-     * Sets number and foreground color according to userInput.
-     *
-     * @param number        Number to be set.
-     * @param userInput     Boolean indicating number is user input or not.
-     */
     public void setNumber(int number, int lang, boolean userInput) {
         setForeground(userInput ? Color.BLUE : Color.BLACK);
         String num = number > 0? NumberSet.numbers[lang][number-1] + "" : "";
         setText(num);
     }
 
-    /**
-     * Returns x position in game.
-     *
-     * @return  X position in game.
-     */
     public int getFieldX() {
         return x;
     }
 
-    /**
-     * Return y position in game.
-     *
-     * @return  Y position in game.
-     */
     public int getFieldY() {
         return y;
     }

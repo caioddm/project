@@ -5,28 +5,15 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import model.Game;
 
-/**
- * This class controls all user actions from ButtonPanel.
- *
- * @author Eric Beijer
- */
 public class ButtonController implements ActionListener {
     private Game game;
 
-    /**
-     * Constructor, sets game.
-     *
-     * @param game  Game to be set.
-     */
+    
     public ButtonController(Game game) {
         this.game = game;
     }
 
-    /**
-     * Performs action after user pressed button.
-     *
-     * @param e ActionEvent.
-     */
+    
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("New")) {
         	
